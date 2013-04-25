@@ -1,0 +1,28 @@
+{
+  "name": "mdn.io",
+  "private": true,
+  "version": "0.0.1",
+  "subdomain": "mdn",
+  "description": "Short URLs for MDN",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/lazd/mdn.io.git"
+  },
+  "keywords": [
+    "mdn",
+    "short",
+    "url",
+    "redirection"
+  ],
+  "author": "Larry Davis",
+  "license": "MIT",
+  "readmeFilename": "README.md",
+  "engines": {
+    "node": "0.8.x"
+  }
+}
