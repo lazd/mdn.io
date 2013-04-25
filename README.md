@@ -31,7 +31,7 @@ expect(queue.add.length).to.equal(1);
 
 ## How does it work?
 
-mdn.io queries the [Google Web Search API] with `yourqueryhere site:developer.mozilla.org` and redirects you to the first result. This is the same mechanism the MDN search box uses, so you'll always get accurate results.
+mdn.io uses Google's "I'm feeling lucky" functionality to redirect you to the first search result.
 
 Note that, because this is a search, the page you're redirected to may change in the future. However, you can rest assured that you'll always be redirected to the page that Google finds most relevant.
 
@@ -49,18 +49,20 @@ mdn.io has no dependencies, start it with:
 
 ### Configuration
 
-Configure mdn.io with the following environment variables.
+Configure mdn.io with the following environment variables:
 
-| Variable            | Description                                    | Default                                               |
-|:------------------- |:---------------------------------------------- |:----------------------------------------------------- |
-| **`PORT`**          | The port to run the server on.                 | `3000`                                                |
-| **`SEARCH_SERVER`** | The Google Web Search API server to use.       | `http://www.google.com/uds`                           |
-| **`SEARCH_DOMAIN`** | The domain to search.                          | `developer.mozilla.org`                               |
-| **`FALLBACK_URL`**  | The fallback URL for empty queries/no matches. | `https://developer.mozilla.org/en-US/docs/JavaScript` |
+| Variable            | Description                                   | Default                                               |
+|:------------------- |:--------------------------------------------- |:----------------------------------------------------- |
+| **`PORT`**          | The port to run the server on.                | `3000`                                                |
+| **`SERVICE`**       | The search service to use `google` or `bing`. | `google`                                              |
+| **`SEARCH_DOMAIN`** | The domain to search.                         | `developer.mozilla.org`                               |
+| **`FALLBACK_URL`**  | The fallback URL for empty queries.           | `https://developer.mozilla.org/en-US/docs/JavaScript` |
+
+**Note:**: Bing does not have an "I'm feeling lucky" equivalent, so you'll be redirected to Bing's search result page instead.
 
 #### Example: Reddit URL shortener
 
-`SEARCH_DOMAIN=reddit.com FALLBACK_URL=reddit.com PORT=8080 node server.js`
+`SEARCH_DOMAIN="reddit.com" FALLBACK_URL="http://reddit.com" PORT=8080 node server.js`
 
 
 [lmgtfy]: http://lmgtfy.com/?q=mdn%20apply
