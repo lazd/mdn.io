@@ -1,7 +1,11 @@
 {
   "name": "mdn.io",
   "private": true,
-  "version": "0.0.1",
+  "version": "0.0.2",
+  "domains": [
+    "mdn.io",
+    "www.mdn.io"
+  ],
   "subdomain": "mdn",
   "description": "Short URLs for MDN",
   "main": "server.js",
