@@ -3,7 +3,7 @@
 
 ## Why?
 
-When looking for JavaScript references, we usually Google `mdn bind` and clicking the first result.
+When looking for JavaScript references, we usually Google `mdn bind` and click the first result.
 
 mdn.io does that for you :)
 
