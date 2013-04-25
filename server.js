@@ -41,9 +41,14 @@ var MDNio = {
       }
     });
   },
+  // Decode the query
+  getQuery: function(url) {
+    return unescape(url.slice(1));
+  },
   // Handle requests from clients
   handleRequest: function (req, res) {
-    var query = req.url.slice(1);
+    var query = MDNio.getQuery(req.url);
+
     // Find the url corresponding to the passed path
     MDNio.getURL(query, function(error, url) {
       if (error || !url) url = MDNio.defaultURL;
