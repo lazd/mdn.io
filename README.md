@@ -51,12 +51,12 @@ mdn.io has no dependencies, start it with:
 
 Configure mdn.io with the following environment variables:
 
-| Variable            | Description                                   | Default                                               |
-|:------------------- |:--------------------------------------------- |:----------------------------------------------------- |
-| **`PORT`**          | The port to run the server on.                | `3000`                                                |
-| **`SERVICE`**       | The search service to use `google` or `bing`. | `google`                                              |
-| **`SEARCH_DOMAIN`** | The domain to search.                         | `developer.mozilla.org`                               |
-| **`FALLBACK_URL`**  | The fallback URL for empty queries.           | `https://developer.mozilla.org/en-US/docs/JavaScript` |
+| Variable            | Description                                          | Default                                               |
+|:------------------- |:---------------------------------------------------- |:----------------------------------------------------- |
+| **`PORT`**          | The port to run the server on.                       | `3000`                                                |
+| **`SERVICE`**       | The search service to use `google`, `bing` or `ddg`. | `google`                                              |
+| **`SEARCH_DOMAIN`** | The domain to search.                                | `developer.mozilla.org`                               |
+| **`FALLBACK_URL`**  | The fallback URL for empty queries.                  | `https://developer.mozilla.org/en-US/docs/JavaScript` |
 
 **Note:**: Bing does not have an "I'm feeling lucky" equivalent, so you'll be redirected to Bing's search result page instead.
 
