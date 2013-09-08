@@ -17,7 +17,8 @@ var mdnio = {
 
   serviceURLs: {
     google: 'http://google.com/search?btnI&q=', // Use btnI to enable "I'm feeling lucky"
-    bing: 'http://www.bing.com/search?q='
+    bing: 'http://www.bing.com/search?q=',
+    ddg: 'https://duckduckgo.com/?q=%21%20' // encodeURIComponent('! ') == %21%20
   },
 
   // Build search URL
