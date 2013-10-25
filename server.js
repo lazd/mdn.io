@@ -16,7 +16,7 @@ var mdnio = {
   fallbackURL: process.env.FALLBACK_URL || 'https://developer.mozilla.org/en-US/docs/JavaScript',
 
   serviceURLs: {
-    google: 'http://google.com/search?btnI&q=', // Use btnI to enable "I'm feeling lucky"
+    google: 'http://google.com/search?btnI&lr=lang_en&q=', // Use btnI to enable "I'm feeling lucky"
     bing: 'http://www.bing.com/search?q=',
     ddg: 'https://duckduckgo.com/?q=%21%20' // encodeURIComponent('! ') == %21%20
   },
