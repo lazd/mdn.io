@@ -13,7 +13,7 @@ var mdnio = {
   service: process.env.SERVICE || 'google',
   
   searchDomain: process.env.SEARCH_DOMAIN || 'developer.mozilla.org',
-  fallbackURL: process.env.FALLBACK_URL || 'https://developer.mozilla.org/en-US/docs/JavaScript',
+  fallbackURL: process.env.FALLBACK_URL || 'https://developer.mozilla.org/en-US/docs/Web/JavaScript',
 
   serviceURLs: {
     google: 'http://google.com/search?btnI&q=', // Use btnI to enable "I'm feeling lucky"
