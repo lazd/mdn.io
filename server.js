@@ -1,61 +1,85 @@
-var http = require('http');
+var http    = require('http');
+var debug   = require('debug')('mdn.io');
+var LRU     = require('lru-cache');
+var util    = require('util');
+var request = require('request');
+var config  = require('./config');
 
-/*
-  Environment variables:
-    PORT: The port to run the server on
-    SERVICE: The search service to use. ('google' or 'bing')
-    SEARCH_DOMAIN: The domain to search
-    FALLBACK_URL: The default URL for empty queries
-*/
+function getServiceUrl (service, query) {
+  var searchQuery = encodeURIComponent(query + ' site:' + config.domain);
 
-var mdnio = {
-  port: process.env.PORT || 3000,
-  service: process.env.SERVICE || 'google',
-  
-  searchDomain: process.env.SEARCH_DOMAIN || 'developer.mozilla.org',
-  fallbackURL: process.env.FALLBACK_URL || 'https://developer.mozilla.org/en-US/docs/Web/JavaScript',
+  return util.format(service, searchQuery);
+}
 
-  serviceURLs: {
-    google: 'http://google.com/search?btnI&q=', // Use btnI to enable "I'm feeling lucky"
-    bing: 'http://www.bing.com/search?q=',
-    ddg: 'https://duckduckgo.com/?q=%21%20' // encodeURIComponent('! ') == %21%20
-  },
+function getRedirectUrl (service, query, done) {
+  var req = request(getServiceUrl(service, query));
 
-  // Build search URL
-  getSearchURL: function(query) {
-    return mdnio.serviceURLs[mdnio.service]+encodeURIComponent(query+' site:'+mdnio.searchDomain);
-  },
+  req.on('response', function (res) {
+    var url = res.request.uri.href;
 
-  // Decode the query
-  getQuery: function(url) {
-    return unescape(url.slice(1));
-  },
+    req.abort();
 
-  // Handle requests from clients
-  handleRequest: function(req, res) {
-    var query = mdnio.getQuery(req.url);
-    var url = query ? mdnio.getSearchURL(query) : mdnio.fallbackURL;
+    return done(null, url);
+  });
 
-    console.log((query || '(empty query)')+' => '+url);
+  req.on('error', done);
+}
 
-    // Redirect to the URL
-    res.writeHead(303, { 'Location': url });
-    res.end();
-  },
+function handler () {
+  var service = config.services[config.service];
 
-  startServer: function() {
-    if (!mdnio.service || !mdnio.serviceURLs.hasOwnProperty(mdnio.service))
-      mdnio.service = 'google';
+  var cache = LRU({
+    max: 10000000, // 10Mb
+    length: function (n) { return n.length; },
+    maxAge: 1000 * 60 * 60 * 24 * 7 // 7 days
+  });
 
-    // Start a server
-    http.createServer(mdnio.handleRequest).listen(mdnio.port);
+  return function (req, res) {
+    var query = decodeURIComponent(req.url.substr(1));
+    var url = cache.get(query);
 
-    console.log('mdn.io server running on port '+mdnio.port);
-    console.log('Search service: '+mdnio.service);
-    console.log('Domain: '+mdnio.searchDomain);
-    console.log('Default URL: '+mdnio.fallbackURL);
-  }
-};
+    function redirect (url) {
+      debug('Redirect (%s => %s)', query || '(empty query)', url);
 
-// Start the server
-mdnio.startServer();
+      res.writeHead(303, { 'Location': url });
+      res.end();
+    }
+
+    if (!query) {
+      return redirect(config.fallbackUrl);
+    }
+
+    if (url) {
+      debug('Using cache (%s => %s)', query, url);
+
+      return redirect(url);
+    }
+
+    getRedirectUrl(service, query, function (err, url) {
+      if (err) {
+        debug('Error redirecting (%s)', err);
+
+        res.writeHead(500);
+        res.end();
+        return;
+      }
+
+      cache.set(query, url);
+
+      debug('Redirect cached (%s => %s)', query, url);
+
+      return redirect(url);
+    });
+  };
+}
+
+var server = module.exports = http.createServer(handler());
+
+if (!module.parent) {
+  server.listen(config.port, function () {
+    debug('Server running on port %s', config.port);
+    debug('Search service: %s', config.service);
+    debug('Domain: %s', config.domain);
+    debug('Default URL: %s', config.fallbackUrl);
+  });
+}

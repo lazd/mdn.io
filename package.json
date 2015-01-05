@@ -10,7 +10,6 @@
   "description": "Short URLs for MDN",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
   "repository": {
@@ -23,10 +22,22 @@
     "url",
     "redirection"
   ],
+  "contributors": [
+    {
+      "name": "Blake Embrey",
+      "email": "hello@blakeembrey.com",
+      "url": "http://blakeembrey.me"
+    }
+  ],
   "author": "Larry Davis",
   "license": "MIT",
   "readmeFilename": "README.md",
   "engines": {
-    "node": "0.8.x"
+    "node": "0.10.x"
+  },
+  "dependencies": {
+    "debug": "^2.1.1",
+    "lru-cache": "^2.5.0",
+    "request": "^2.51.0"
   }
 }
