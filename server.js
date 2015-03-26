@@ -35,7 +35,16 @@ function handler () {
   });
 
   return function (req, res) {
-    var query = decodeURIComponent(req.url.substr(1));
+    var query
+
+    // Catch invalid URI decodes. E.g. "%abc".
+    try {
+      query = decodeURIComponent(req.url.substr(1));
+    } catch (e) {
+      res.statusCode = 400;
+      res.end();
+    }
+
     var url = cache.get(query);
 
     function redirect (url) {
