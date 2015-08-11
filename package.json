@@ -37,7 +37,6 @@
   },
   "dependencies": {
     "debug": "^2.1.1",
-    "lru-cache": "^2.5.0",
-    "request": "^2.51.0"
+    "lru-cache": "^2.5.0"
   }
 }

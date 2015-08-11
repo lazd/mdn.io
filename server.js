@@ -1,9 +1,14 @@
 var http    = require('http');
+var https   = require('https');
 var debug   = require('debug')('mdn.io');
 var LRU     = require('lru-cache');
 var util    = require('util');
-var request = require('request');
+var urlLib  = require('url');
 var config  = require('./config');
+
+var CACHE_TIMEOUT = 7 * 24 * 60 * 60 * 1000 // 7 days.
+var CACHE_MAX_SIZE = 10000000 // 10Mb.
+var ATTEMPT_TIMEOUT = 30 * 60 * 1000 // 30 minutes.
 
 function getServiceUrl (service, query) {
   var searchQuery = encodeURIComponent(query + ' site:' + config.domain);
@@ -11,28 +16,37 @@ function getServiceUrl (service, query) {
   return util.format(service, searchQuery);
 }
 
-function getRedirectUrl (service, query, done) {
-  var req = request(getServiceUrl(service, query));
+function followRedirect (url, done) {
+  var req = /^https?:\/\//i.test(url) ? https.get(url) : http.get(url);
 
-  req.on('response', function (res) {
-    var url = res.request.uri.href;
-
+  req.once('response', function (res) {
     req.abort();
+
+    if (res.statusCode === 301 || res.statusCode === 302 || res.statusCode === 303) {
+      if (res.headers.location) {
+        return followRedirect(res.headers.location, done);
+      }
+    }
 
     return done(null, url);
   });
 
-  req.on('error', done);
+  req.once('error', done);
 }
 
 function handler () {
   var service = config.services[config.service];
 
-  var cache = LRU({
-    max: 10000000, // 10Mb
+  var redirectCache = LRU({
+    max: CACHE_MAX_SIZE,
     length: function (n) { return n.length; },
-    maxAge: 1000 * 60 * 60 * 24 * 7 // 7 days
+    maxAge: CACHE_TIMEOUT
   });
+
+  var failedRedirectCache = LRU({
+    max: 1,
+    maxAge: ATTEMPT_TIMEOUT
+  })
 
   return function (req, res) {
     var query
@@ -45,7 +59,9 @@ function handler () {
       res.end();
     }
 
-    var url = cache.get(query);
+    var url = redirectCache.get(query);
+    var serviceUrl = getServiceUrl(service, query);
+    var failedRedirect = failedRedirectCache.itemCount > 0;
 
     function redirect (url) {
       debug('Redirect (%s => %s)', query || '(empty query)', url);
@@ -64,7 +80,13 @@ function handler () {
       return redirect(url);
     }
 
-    getRedirectUrl(service, query, function (err, url) {
+    if (failedRedirect) {
+      debug('Using client side redirect (%s => %s)', query, serviceUrl);
+
+      return redirect(serviceUrl);
+    }
+
+    followRedirect(serviceUrl, function (err, url) {
       if (err) {
         debug('Error redirecting (%s)', err);
 
@@ -73,7 +95,17 @@ function handler () {
         return;
       }
 
-      cache.set(query, url);
+      // If we weren't redirected where the domain we wanted to go,
+      // fallback to client-side redirects.
+      if (urlLib.parse(url).hostname !== config.domain) {
+        failedRedirectCache.set(query, url);
+
+        debug('Redirect failed (%s => %s)', query, url);
+
+        return redirect(serviceUrl);
+      }
+
+      redirectCache.set(query, url);
 
       debug('Redirect cached (%s => %s)', query, url);
 
