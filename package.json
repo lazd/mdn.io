@@ -2,15 +2,13 @@
   "name": "mdn.io",
   "private": true,
   "version": "0.0.2",
-  "domains": [
-    "mdn.io",
-    "www.mdn.io"
-  ],
-  "subdomain": "mdn",
   "description": "Short URLs for MDN",
-  "main": "server.js",
+  "main": "lib/index.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node lib/server.js",
+    "clean": "rimraf bundle",
+    "build": "npm run clean && mkdir bundle && cp -r lib/* bundle",
+    "bundle": "npm run build && cp package.json bundle/package.json && cd bundle && npm install --production && zip -qr bundle.zip ./*"
   },
   "repository": {
     "type": "git",
@@ -33,9 +31,16 @@
   "license": "MIT",
   "readmeFilename": "README.md",
   "engines": {
-    "node": "0.10.x"
+    "node": ">= 4.2.0"
   },
   "dependencies": {
-    "debug": "^2.1.1"
+    "debug": "^2.6.3",
+    "servie": "^0.2.1",
+    "servie-http": "0.0.2",
+    "servie-lambda": "^0.2.3",
+    "servie-redirect": "0.0.1"
+  },
+  "devDependencies": {
+    "rimraf": "^2.6.1"
   }
 }
