@@ -26,7 +26,7 @@ expect(queue.add.length).to.equal(1);
 
 > [mdn.io/closure](http://mdn.io/closure)
 
-> [mdn.io/cross origin sharing](http://mdn.io/cross origin sharing)
+> [mdn.io/cross origin sharing](http://mdn.io/cross%20origin%20sharing)
 
 
 ## How does it work?
