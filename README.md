@@ -1,5 +1,6 @@
 # mdn.io
-> The "I'm feeling lucky" URL shortener
+
+> The "I'm feeling lucky" URL shortener.
 
 ## Why?
 
@@ -16,7 +17,7 @@ expect(queue.add.length).to.equal(1);
 
 #### As a [lmgtfy] replacement for JavaScript questions
 
-> **friend:** dude, is it call() or apply() that takes an array?
+> **friend:** dude, is it `call()` or `apply()` that takes an array?
 
 > **you:** mdn.io/apply
 
@@ -28,24 +29,22 @@ expect(queue.add.length).to.equal(1);
 
 > [mdn.io/cross origin sharing](http://mdn.io/cross%20origin%20sharing)
 
-
 ## How does it work?
 
 mdn.io uses Google's "I'm feeling lucky" functionality to redirect you to the first search result.
 
 Note that, because this is a search, the page you're redirected to may change in the future. However, you can rest assured that you'll always be redirected to the page that Google finds most relevant.
 
-
 ## Searching other domains
 
 mdn.io can be used to search any domain. See the [configuration](#configuration) section and fire up your own instance.
 
+## Development
 
-## Starting the server
-
-mdn.io has no dependencies, start it with:
-
-`PORT=8080 node server.js`
+```sh
+npm install # Install dependencies.
+npm start # Start server locally.
+```
 
 ### Configuration
 
@@ -64,6 +63,14 @@ Configure mdn.io with the following environment variables:
 
 `SEARCH_DOMAIN="reddit.com" FALLBACK_URL="http://reddit.com" PORT=8080 node server.js`
 
+## Deployment
+
+```sh
+npm run bundle
+cd terraform
+terraform init
+terraform plan
+```
 
 [lmgtfy]: http://lmgtfy.com/?q=mdn%20apply
 [Mozilla Developer Network]: https://developer.mozilla.org/en-US/

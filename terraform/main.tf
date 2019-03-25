@@ -1,6 +1,5 @@
 variable "access_key" {}
 variable "secret_key" {}
-variable "account_id" {}
 
 variable "region" {
   default = "us-east-1"
@@ -151,7 +150,7 @@ resource "aws_lambda_function" "mdn_io_lambda" {
   function_name = "mdn_io"
   role          = "${aws_iam_role.mdn_io_lambda_iam.arn}"
   handler       = "lambda.handler"
-  runtime       = "nodejs6.10"
+  runtime       = "nodejs8.10"
 
   environment {
     variables = {
@@ -165,5 +164,5 @@ resource "aws_lambda_permission" "mdn_io_lambda_apigw" {
   action        = "lambda:InvokeFunction"
   function_name = "${aws_lambda_function.mdn_io_lambda.arn}"
   principal     = "apigateway.amazonaws.com"
-  source_arn    = "arn:aws:execute-api:${var.region}:${var.account_id}:${aws_api_gateway_rest_api.mdn_io.id}/*"
+  source_arn    = "${aws_api_gateway_rest_api.mdn_io.execution_arn}/*"
 }
