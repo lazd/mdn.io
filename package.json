@@ -34,11 +34,11 @@
     "node": ">= 4.2.0"
   },
   "dependencies": {
-    "debug": "^2.6.3",
-    "servie": "^0.2.1",
-    "servie-http": "0.0.2",
-    "servie-lambda": "^0.2.3",
-    "servie-redirect": "0.0.1"
+    "debug": "^4.1.1",
+    "servie": "^3.2.4",
+    "servie-http": "^1.3.0",
+    "servie-lambda": "^1.2.0",
+    "servie-redirect": "^1.0.0"
   },
   "devDependencies": {
     "rimraf": "^2.6.1"
