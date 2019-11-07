@@ -1,0 +1,10 @@
+type = "webpack"
+name = "mdn-io-dev"
+account_id = "cd4fb2c50dd11c531323586833df5eeb"
+zone_id = "f899610ff526f33f8cf2f3a571f7935b"
+route = "dev.mdn.io/*"
+webpack_config = "webpack.config.js"
+
+[env.production]
+name = "mdn-io"
+route = "mdn.io/*"

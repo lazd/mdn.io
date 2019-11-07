@@ -53,23 +53,23 @@ Configure mdn.io with the following environment variables:
 | Variable            | Description                                          | Default                                               |
 |:------------------- |:---------------------------------------------------- |:----------------------------------------------------- |
 | **`PORT`**          | The port to run the server on.                       | `3000`                                                |
-| **`SERVICE`**       | The search service to use `google`, `bing` or `ddg`. | `google`                                              |
+| **`SERVICE_URL`**   | The search service URL to use.                       | `https://duckduckgo.com/?q=%21%20%s`                  |
 | **`SEARCH_DOMAIN`** | The domain to search.                                | `developer.mozilla.org`                               |
 | **`FALLBACK_URL`**  | The fallback URL for empty queries.                  | `https://developer.mozilla.org/en-US/docs/JavaScript` |
 
-**Note:**: Bing does not have an "I'm feeling lucky" equivalent, so you'll be redirected to Bing's search result page instead.
+**Alternative service URLs:**
+
+* Google - `https://www.google.com/search?btnI&q=%s`
+* Bing - `http://www.bing.com/search?q=%s` (Bing does not have an "I'm Feeling Lucky" equivalent, you'll be redirected to the search result page instead)
 
 #### Example: Reddit URL shortener
 
-`SEARCH_DOMAIN="reddit.com" FALLBACK_URL="http://reddit.com" PORT=8080 node server.js`
+`SEARCH_DOMAIN="reddit.com" FALLBACK_URL="http://reddit.com" PORT=8080 npm start`
 
 ## Deployment
 
 ```sh
-npm run bundle
-cd terraform
-terraform init
-terraform plan
+npm run deploy
 ```
 
 [lmgtfy]: http://lmgtfy.com/?q=mdn%20apply

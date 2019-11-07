@@ -6,9 +6,7 @@
   "main": "lib/index.js",
   "scripts": {
     "start": "node lib/server.js",
-    "clean": "rimraf bundle",
-    "build": "npm run clean && mkdir bundle && cp -r lib/* bundle",
-    "bundle": "npm run build && cp package.json bundle/package.json && cd bundle && npm install --production && zip -qr bundle.zip ./*"
+    "deploy": "wrangler publish"
   },
   "repository": {
     "type": "git",
@@ -35,12 +33,12 @@
   },
   "dependencies": {
     "debug": "^4.1.1",
-    "servie": "^3.2.4",
-    "servie-http": "^1.3.0",
-    "servie-lambda": "^1.2.0",
-    "servie-redirect": "^1.0.0"
+    "servie": "^4.3.2",
+    "servie-http": "^2.0.1",
+    "servie-redirect": "^2.0.0",
+    "servie-url": "^1.0.1"
   },
   "devDependencies": {
-    "rimraf": "^2.6.1"
+    "rimraf": "^3.0.0"
   }
 }
