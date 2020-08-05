@@ -31,7 +31,7 @@ expect(queue.add.length).to.equal(1);
 
 ## How does it work?
 
-mdn.io uses DuckDuckGo's "I'm feeling lucky" functionality to redirect you to the first search result.
+mdn.io uses DuckDuckGo's Bang! functionality to redirect you to the first search result.
 
 Note that, because this is a search, the page you're redirected to may change in the future. However, you can rest assured that you'll always be redirected to the page that DuckDuckGo finds most relevant.
 
