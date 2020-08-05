@@ -4,7 +4,7 @@
 
 ## Why?
 
-The [Mozilla Developer Network] is an awesome JavaScript resource. When looking for JavaScript references on something like `Function.apply`, you might Google "apply site:developer.mozilla.org" and click the first result.
+The [Mozilla Developer Network] is an awesome JavaScript resource. When looking for JavaScript references on something like `Function.apply`, you might use a search engine with "apply site:developer.mozilla.org" and click the first result.
 
 mdn.io does that for you, and can be configured to [search any domain](#searching-other-domains).
 
@@ -31,9 +31,9 @@ expect(queue.add.length).to.equal(1);
 
 ## How does it work?
 
-mdn.io uses Google's "I'm feeling lucky" functionality to redirect you to the first search result.
+mdn.io uses DuckDuckGo's Bang! functionality to redirect you to the first search result.
 
-Note that, because this is a search, the page you're redirected to may change in the future. However, you can rest assured that you'll always be redirected to the page that Google finds most relevant.
+Note that, because this is a search, the page you're redirected to may change in the future. However, you can rest assured that you'll always be redirected to the page that DuckDuckGo finds most relevant.
 
 ## Searching other domains
 
