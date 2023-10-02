@@ -32,7 +32,7 @@
     "node": ">= 4.2.0"
   },
   "dependencies": {
-    "debug": "^4.1.1",
+    "debug": "^4.3.1",
     "servie": "^4.3.2",
     "servie-http": "^2.0.1",
     "servie-redirect": "^2.0.0",
