@@ -1,7 +1,6 @@
 name = "mdn-io-dev"
 account_id = "cd4fb2c50dd11c531323586833df5eeb"
 compatibility_date = "2024-04-19"
-route = "dev.mdn.io/*"
 main = "src/worker.js"
 
 [env.production]
