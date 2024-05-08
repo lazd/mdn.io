@@ -6,6 +6,13 @@ addEventListener("fetch", (event) => {
 
 function redirect(request) {
   const url = new URL(request.url);
+  const redirectUrl = handler(decodeURIComponent(url.pathname.slice(1)));
 
-  return Response.redirect(handler(decodeURIComponent(url.pathname.slice(1))), 303);
+  return new Response(null, {
+    status: 303,
+    headers: {
+      Location: redirectUrl,
+      "Referrer-Policy": "no-referrer",
+    },
+  });
 }
