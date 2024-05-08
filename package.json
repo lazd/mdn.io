@@ -6,7 +6,8 @@
   "main": "lib/index.js",
   "scripts": {
     "start": "node lib/server.js",
-    "deploy": "wrangler publish"
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy"
   },
   "repository": {
     "type": "git",
@@ -32,13 +33,10 @@
     "node": ">= 4.2.0"
   },
   "dependencies": {
-    "debug": "^4.1.1",
-    "servie": "^4.3.2",
-    "servie-http": "^2.0.1",
-    "servie-redirect": "^2.0.0",
-    "servie-url": "^1.0.1"
+    "debug": "^4.1.1"
   },
   "devDependencies": {
-    "rimraf": "^3.0.0"
+    "rimraf": "^5.0.5",
+    "wrangler": "^3.53.1"
   }
 }
