@@ -3,9 +3,7 @@
   "private": true,
   "version": "0.0.2",
   "description": "Short URLs for MDN",
-  "main": "lib/index.js",
   "scripts": {
-    "start": "node lib/server.js",
     "dev": "wrangler dev",
     "deploy": "wrangler deploy"
   },
